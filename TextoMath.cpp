@@ -1,15 +1,14 @@
 #include<iostream>
 using namespace std;
 
-void titulo(); void matriz2x2(); void matriz3x3(); void simpFrac(int &numd, int &denm);
-void imp2x2();
+void titulo();
+void matriz2x2();
+void matriz2x2_print(char varX, float coefX, char varY, float coefY, float cons);
+void matriz2x2_math(char varX, char varY, float coefX, float coefY, float cons, float coefX2, float coefY2, float cons2);
+void matriz3x3();
+void simpFrac(int &numd, int &denm);
+void dialogo(int numText);
 int menu(); int mcd(int a,int b); 
-
-// Variables Públicas //
-char varX,varY,varZ;
-char varX2,varY2,varZ2;
-float coefX,coefY,coefZ,cons,detA,detX,detY,detZ,numdX,numdY,denmX,denmY;
-float coefX2,coefY2,coefZ2,cons2;
 
 int main(){
 
@@ -23,7 +22,8 @@ int main(){
 				matriz2x2();
 				break;
 			case 2:
-				matriz3x3();
+				dialogo(1);
+				system("pause");
 				break;
 		}
 	}while(opc!=3);
@@ -32,8 +32,8 @@ int main(){
 
 void titulo(){
 	system("cls");
-	string marco = "	:::::::::::::::::::::::::::::::::::::::::\n";
-	cout << endl << marco << "	:: TextoMath v 0.2 - Por: Camilo Cruz  ::\n"<< marco << endl;
+	string marco = "	::::::::::::::::::::::::::::::::::::::::::::::::\n";
+	cout << endl << marco << "	:: AlgeMath v 0.3 (alpha) - Por: Camilo Cruz  ::\n"<< marco << endl;
 }
 
 int menu(){
@@ -42,6 +42,26 @@ int menu(){
 	cout << "	:: 1. Matrices 2x2\n	:: 2. Matrices 3x3\n"<< endl <<"	[]: ";
 	cin >> opc;
 	return opc;
+}
+
+void matriz2x2(){
+char varX,varY;
+float coefX,coefY,cons; float coefX2,coefY2,cons2;
+
+	cout << "	:: Hola, ingresa la letra de la primera variable: "; cin >> varX; cout << endl;
+	cout << "	:: Genial, ahora ingresa el valor de " << varX << ": "; cin >> coefX; cout << endl;
+	cout << "	:: Ahora, ingresa la letra de segunda variable: "; cin >> varY; cout << endl;
+	cout << "	:: Genial, ahora ingresa el valor de " << varY << ": "; cin >> coefY; cout << endl;
+	cout << "	:: Por ultimo, la primera constante: "; cin >> cons; cout << endl;
+	
+	cout << "	:: Genial, ahora ingresa el valor de " << varX << ": "; cin >> coefX2; cout << endl;
+	cout << "	:: Genial, ahora ingresa el valor de " << varY << ": "; cin >> coefY2; cout << endl;
+	cout << "	:: Por ultimo, la primera constante: "; cin >> cons2; cout << endl;
+	
+	matriz2x2_math(varX, varY, coefX, coefY, cons, coefX2, coefY2, cons2);
+
+	cout << endl;
+	system("pause");
 }
 
 int mcd(int a,int b){ // Calcula el maximo común divisor //
@@ -54,12 +74,10 @@ void simpFrac(float &numd, float &denm){
 	numd /= divCom; denm /= divCom;
 }
 
-void matriz2x2(){
-
-	float x,y;
-	varX = 'x'; varY = 'y';
-	coefX = 4; coefY = -2; cons = 8;
-	coefX2 = 3; coefY2 = 1;  cons2 = 2;
+void matriz2x2_math(char varX, char varY, float coefX, float coefY, float cons, float coefX2, float coefY2, float cons2){
+	
+float detA,detX,detY,numdX,numdY,denmX,denmY;
+float x,y;
 
 	detA = ((coefX*coefY2)-(coefX2*coefY)); // Calcular determinantes //
 	detX = ((cons*coefY2)-(cons2*coefY));
@@ -72,9 +90,20 @@ void matriz2x2(){
 	simpFrac(numdY, denmY);
 	
 	titulo();
-	cout << "	:: Matriz a resolver:\n" << endl;
+	matriz2x2_print(varX, coefX, varY, coefY, cons);
+	matriz2x2_print(varX, coefX2, varY, coefY2, cons2);
+	cout << "\n	:: Det A: " << detA << endl;
+	cout << "	:: Det X: " << detX << endl;
+	cout << "	:: Det Y: " << detY << endl << endl;
+	cout << "	:: X: " << numdX << "/" << denmX << "	=	" << x << endl;
+	cout << "	:: Y: " << numdY << "/" << denmY << "	=	" << y << endl << endl;
+
+cout << "	:: ";
+system("pause");
+}
+
+void matriz2x2_print(char varX, float coefX, char varY, float coefY, float cons){
 	
-	// Imprime la ecuación 1 //
 	cout << "	 | ";
 	
 	if (coefX<0){ // Imprime el valor de X //
@@ -99,50 +128,30 @@ void matriz2x2(){
 	}
 				
 	cout<<varY<<" = "<<cons<< endl;// Imprime la variable Y y la constante //
-		
-	// Imprime la ecuación 2 //
-	cout << "	 | ";
-	
-	if (coefX2<0){ // Imprime el valor de X2 //
-		cout << "-";
-		if(coefX2 != 1 && coefX2 != -1 && coefX2 != 0){
-			cout << abs(coefX2);}
-	} else{
-		if(coefX2 != 1 && coefX2 != -1 && coefX2 != 0){
-			cout << abs(coefX2);}
-	}
-	
-	cout << varX; // Imprime la variable X2 //
-	
-	if(coefY2>=0){ // Imprime el valor de Y2 //7
-		cout<<"+";
-		if(coefY2 != 1 && coefY2 != -1 && coefY2 != 0){
-			cout << abs(coefY2);}
-	} else{
-		cout << "-";
-		if(coefY2 != 1 && coefY2 != -1 && coefY2 != 0){
-			cout << abs(coefY2);}
-	}
-				
-	cout<<varY<<" = "<<cons2<< endl << endl;// Imprime la variable Y2 y la constante 2 //
-	
-	cout << "	:: Det A: " << detA << endl;
-	cout << "	:: Det X: " << detX << endl;
-	cout << "	:: Det Y: " << detY << endl << endl;
-	cout << "	:: X: " << numdX << "/" << denmX << "	=	" << x << endl;
-	cout << "	:: Y: " << numdY << "/" << denmY << "	=	" << y << endl << endl;
-
-cout << "	:: ";
-system("pause");
 }
 
 void matriz3x3(){
 }
 
-/* Changelog v0.2 pre-alpha // 19/09/2024
+void dialogo(int numText){
 	
-	- Ahora se puden mostrar los resultados en fracciones
-	- Se mejoró el sistema para imprimir la variable:
-		- Ya no se imprimirán los números 1, -1 y 0
-		- Los valores negativos ya no se mostrarán 2 veces
+	static const string Dialogos[]{
+	"Este es el dialogo 0\n", // 0
+	"Este es el dialogo 1\n", // 1
+	"Este es el dialogo 2\n", // 2
+	"Este es el dialogo 3\n", // 3
+	};
+	
+	cout << Dialogos[numText];
+}
+
+/* Changelog v0.3:
+	- Ahora el usuario puede digitar las variables y sus valores.
+	- Se optimizó el código, implementando una función que imprime
+	ambas matrices sin necesidad de escribir 2 veces la impresión.
+	- Ahora la función que resuelve la matriz, recibe los datos por parámetro.
+	- Se está probando una función que almacene todos los dialogos del programa
+	para que el codigo se vea más limpio.
+	- Se quitaron las variables públicas porque por el momento no son necesarias.
+	- Se quitaron variables que no se estaban usando.
 */
