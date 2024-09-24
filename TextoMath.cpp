@@ -34,7 +34,7 @@ int main(){
 void titulo(){
 	system("cls");
 	string marco = "	::::::::::::::::::::::::::::::::::::::::::::::::\n";
-	cout << endl << marco << "	:: AlgeMath v 0.3 (alpha) - Por: Camilo Cruz  ::\n"<< marco << endl;
+	cout << endl << marco << "	:: AlgeMath v 0.4 (alpha) - Por: Camilo Cruz  ::\n"<< marco << endl;
 }
 
 int menu(){
