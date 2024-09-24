@@ -1,8 +1,10 @@
 #include<iostream>
 using namespace std;
 
-void titulo();
+void titulo(); void titulo_matriz(); void titulo_matriz2();
 void matriz2x2();
+void compX(float coefX); void compY(float coefY);
+void dialogoMatriz(int numText);
 void matriz2x2_print(char varX, float coefX, char varY, float coefY, float cons);
 void matriz2x2_math(char varX, char varY, float coefX, float coefY, float cons, float coefX2, float coefY2, float cons2);
 void matriz3x3();
@@ -18,7 +20,6 @@ int main(){
 		opc = menu();
 		switch(opc){
 			case 1:
-				titulo();
 				matriz2x2();
 				break;
 			case 2:
@@ -44,26 +45,92 @@ int menu(){
 	return opc;
 }
 
-void matriz2x2(){
-char varX,varY;
-float coefX,coefY,cons; float coefX2,coefY2,cons2;
-
-	cout << "	:: Hola, ingresa la letra de la primera variable: "; cin >> varX; cout << endl;
-	cout << "	:: Genial, ahora ingresa el valor de " << varX << ": "; cin >> coefX; cout << endl;
-	cout << "	:: Ahora, ingresa la letra de segunda variable: "; cin >> varY; cout << endl;
-	cout << "	:: Genial, ahora ingresa el valor de " << varY << ": "; cin >> coefY; cout << endl;
-	cout << "	:: Por ultimo, la primera constante: "; cin >> cons; cout << endl;
-	
-	cout << "	:: Genial, ahora ingresa el valor de " << varX << ": "; cin >> coefX2; cout << endl;
-	cout << "	:: Genial, ahora ingresa el valor de " << varY << ": "; cin >> coefY2; cout << endl;
-	cout << "	:: Por ultimo, la primera constante: "; cin >> cons2; cout << endl;
-	
-	matriz2x2_math(varX, varY, coefX, coefY, cons, coefX2, coefY2, cons2);
-
-	cout << endl;
-	system("pause");
+void titulo_matriz(){
+	system("cls");
+	titulo();
+	cout << "\n	:: Arma tu matriz!\n\n	   | ";
 }
 
+void titulo_matriz2(){
+	system("cls");
+	titulo();
+	cout << "\n	:: Excelente, ahora crea la segunda matriz!!\n\n";
+}
+
+void matriz2x2(){ // [][]+/-[][]=[]
+char varX,varY;
+float coefX,coefY,cons; float coefX2,coefY2,cons2;
+	
+	titulo_matriz(); dialogoMatriz(5);
+		dialogoMatriz(0); cin >> coefX;
+		
+	titulo_matriz(); compX(coefX); cout << "[]+/-[][] = []\n" << endl;
+		dialogoMatriz(1); cin >> varX;
+
+	titulo_matriz(); compX(coefX); cout << varX << "+/-[][] = []\n" << endl;
+		dialogoMatriz(2); cin >> coefY;
+
+	titulo_matriz(); compX(coefX); cout << varX; compY(coefY); cout << "[] = []\n" << endl;
+		dialogoMatriz(3); cin >> varY;
+
+	titulo_matriz(); compX(coefX); cout << varX; compY(coefY); cout << varY << " = []\n" << endl;
+		dialogoMatriz(4); cin >> cons;
+
+	titulo_matriz2(); matriz2x2_print(varX, coefX, varY, coefY, cons);
+		cout << "	   | "; dialogoMatriz(5);
+			dialogoMatriz(0); cin >> coefX2;
+
+	titulo_matriz2(); matriz2x2_print(varX, coefX, varY, coefY, cons);	
+		cout << "	   | "; compX(coefX2); cout << varX << "+/-[][] = []\n" << endl;
+			dialogoMatriz(2); cin >> coefY2;
+			
+	titulo_matriz2(); matriz2x2_print(varX, coefX, varY, coefY, cons);	
+		cout << "	   | "; compX(coefX2); cout << varX; compY(coefY2); cout << varY << " = []\n" << endl;
+			dialogoMatriz(4); cin >> cons2;
+
+	matriz2x2_math(varX, varY, coefX, coefY, cons, coefX2, coefY2, cons2);
+
+}
+
+void compX(float coefX){
+	
+	if (coefX<0){ // Imprime el valor de X //
+		cout << "-";
+		if(coefX != 1 && coefX != -1 && coefX != 0){
+			cout << abs(coefX);}
+	} else{
+		if(coefX != 1 && coefX != -1 && coefX != 0){
+			cout << abs(coefX);}
+	}
+}
+
+void compY(float coefY){
+	
+	if(coefY>=0){ // Imprime el valor de Y //
+		cout<<"+";
+		if(coefY != 1 && coefY != -1 && coefY != 0){
+			cout << abs(coefY);}
+	} else{
+		cout << "-";
+		if(coefY != 1 && coefY != -1 && coefY != 0){
+			cout << abs(coefY);}
+	}
+}
+
+
+void dialogoMatriz(int numText){
+	
+	static const string DialogosMatriz[]{
+	"\n	:: Ingresa el valor que tendra la primera variable: ", // 0
+	"\n	:: Asigna una letra para la primera variable: ", 	   // 1
+	"\n	:: Ingresa el valor que tendra la segunda variable: ", // 2
+	"\n	:: Ahora, asignale una letra a la segunda variable: ", // 3
+	"\n	:: Ingresa el valor que llevara la constante: ", 	   // 4
+	"[][]+/-[][] = []\n\n",									   // 5
+	};
+	
+	cout << DialogosMatriz[numText];
+}
 int mcd(int a,int b){ // Calcula el maximo común divisor //
 	if(b == 0) return a;
 	return mcd(b, a % b);
@@ -104,7 +171,7 @@ system("pause");
 
 void matriz2x2_print(char varX, float coefX, char varY, float coefY, float cons){
 	
-	cout << "	 | ";
+	cout << "	   | ";
 	
 	if (coefX<0){ // Imprime el valor de X //
 		cout << "-";
@@ -145,13 +212,9 @@ void dialogo(int numText){
 	cout << Dialogos[numText];
 }
 
-/* Changelog v0.3:
+/* Changelog v0.4: // 24/09/2024
 	- Ahora el usuario puede digitar las variables y sus valores.
-	- Se optimizó el código, implementando una función que imprime
-	ambas matrices sin necesidad de escribir 2 veces la impresión.
-	- Ahora la función que resuelve la matriz, recibe los datos por parámetro.
-	- Se está probando una función que almacene todos los dialogos del programa
-	para que el codigo se vea más limpio.
-	- Se quitaron las variables públicas porque por el momento no son necesarias.
+	- Se mejoraron los dialogos para que sean más entendibles para el usuario.
+	- Se optimización a la hora de imprimir ecuaciones
 	- Se quitaron variables que no se estaban usando.
 */
